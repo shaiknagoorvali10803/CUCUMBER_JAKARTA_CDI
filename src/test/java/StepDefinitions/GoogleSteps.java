@@ -31,13 +31,11 @@ public class GoogleSteps {
     @PostConstruct
     private void init( ){
         PageFactory.initElements(this.driverProvider.getInstance(), this);
-        System.out.println(scenarioContext.getScenario().getName());
        }
 
    @Given("I am on the google site")
     public void launchSite() {
         this.googlePage.goTo();
-        System.out.println("Current Thread Number "+ Thread.currentThread().getThreadGroup() +"thread number"+ Thread.currentThread().getId());
         }
     @When("I enter {string} as a keyword")
     public void enterKeyword(String keyword) {
@@ -48,17 +46,18 @@ public class GoogleSteps {
     public void clickSearch() throws IOException {
         Uninterruptibles.sleepUninterruptibly(Duration.ofSeconds(4));
         Assertions.assertTrue(this.googlePage.isAt());
-        System.out.println("hashcode driver "+driverProvider.getInstance().hashCode());
-        System.out.println(scenarioContext.getScenario().getName());
+        SeleniumUtils.insertScreenShot(driverProvider.getInstance(),scenarioContext,"getting Count");
+
        }
     @Then("I should see at least {int} results")
     public void verifyResults(int count) throws InterruptedException, IOException {
         Assertions.assertTrue(this.googlePage.getCount() >= count);
         SeleniumUtils.singleClick(driverProvider.getInstance(),By.xpath("//a[normalize-space()='Images']"));
+        SeleniumUtils.insertScreenShot(driverProvider.getInstance(),scenarioContext,"imgaes");
         Thread.sleep(3000);
         System.out.println("Current Thread Number "+ Thread.currentThread().getThreadGroup() +"thread number"+ Thread.currentThread().getId());
         driverProvider.getInstance().findElement(By.xpath("//a[normalize-space()='Videos']")).click();
-        System.out.println(scenarioContext.getScenario().getName());
+        SeleniumUtils.insertScreenShot(driverProvider.getInstance(),scenarioContext,"videos");
         Thread.sleep(3000);
     }
  }

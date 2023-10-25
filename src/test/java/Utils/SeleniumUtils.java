@@ -1909,4 +1909,9 @@ public  class SeleniumUtils {
         return year + 1900;
     }
 
+    public static void insertScreenShot(WebDriver driver, ScenarioContext scenarioContext,String screenshotText){
+        final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        scenarioContext.getScenario().attach(screenshot, "image/png", screenshotText);
+    }
+
 }
